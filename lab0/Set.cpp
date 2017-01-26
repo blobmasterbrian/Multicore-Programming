@@ -20,7 +20,7 @@ bool set::Set<Object>::find(Object key)
 {
     // use std hash functor modulo 200
     std::hash<Object> hasher;
-    size_t idx = hasher(key) % 200;
+    size_t idx = hasher(key) % capacity;
     size_t i = idx;
     do {
         if (set[i] == -1 || set[i] == '\0') {
@@ -39,7 +39,7 @@ int set::Set<Object>::insert(Object key)
 {
     // use find, insert empty, else check equal, linear probe if not
     std::hash<Object> hasher;
-    size_t idx = hasher(key) % 200;
+    size_t idx = hasher(key) % capacity;
     size_t i = idx;
     do {
         if (set[i] == -1 || set[i] == '\0') {  // insert if empty
@@ -70,7 +70,7 @@ size_t set::Set<Object>::find_idx(Object key)
 {
     // use std hash functor modulo 200
     std::hash<Object> hasher;
-    size_t idx = hasher(key) % 200;
+    size_t idx = hasher(key) % capacity;
     size_t i = idx;
     do {
         if (set[i] == -1 || set[i] == '\0') {
