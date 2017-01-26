@@ -19,10 +19,11 @@ template<class Object>
 bool set::Set<Object>::find(Object key)
 {
     // use std hash functor modulo 200
-    size_t idx = hash(key, capacity);
+    std::hash<Object> hasher;
+    size_t idx = hasher(key) % 200;
     size_t i = idx;
     do {
-        if (set[i] == -1 || set[i] == '') {
+        if (set[i] == -1 || set[i] == '\0') {
             return false;
         } else if (set[i] == key) {
             return true;
@@ -37,10 +38,11 @@ template<class Object>
 int set::Set<Object>::insert(Object key)
 {
     // use find, insert empty, else check equal, linear probe if not
-    size_t idx = hash(key, capacity);
+    std::hash<Object> hasher;
+    size_t idx = hasher(key) % 200;
     size_t i = idx;
     do {
-        if (set[i] == -1 || set[i] == '') {  // insert if empty
+        if (set[i] == -1 || set[i] == '\0') {  // insert if empty
             set[i] = key;
             return 0;
         } else if (set[i] == key) {  // return if already inserted
@@ -67,10 +69,11 @@ template<class Object>
 size_t set::Set<Object>::find_idx(Object key)
 {
     // use std hash functor modulo 200
-    size_t idx = hash(key, capacity);
+    std::hash<Object> hasher;
+    size_t idx = hasher(key) % 200;
     size_t i = idx;
     do {
-        if (set[i] == -1 || set[i] == '') {
+        if (set[i] == -1 || set[i] == '\0') {
             return 201;
         } else if (set[i] == key) {
             return i;
