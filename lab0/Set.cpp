@@ -37,7 +37,7 @@ template<class Object>
 int set::Set<Object>::insert(Object key)
 {
     // use find, insert empty, else check equal, linear probe if not
-    size_t idx = find_idx(key);
+    size_t idx = hash(key, capacity);
     size_t i = idx;
     do {
         if (set[i] == -1 || set[i] == '') {  // insert if empty
@@ -56,17 +56,10 @@ template<class Object>
 int set::Set<Object>::del(Object key)
 {
     // set to some val indicating previous occupied
-    size_t idx = find_idx(key)
-    size_t i = idx;
-    do {
-        if (set[i] == -1 || set[i] == '') {
-            return 0;
-        } else if (set[i] == key) {
-            set[i] = 201;
-            return 0;
-        }
-        i = ++i % 201;
-    } while(i != idx);
+    size_t idx = find_idx(key);
+    if (idx != 201) {
+        set[idx] == key;
+    }
     return 0;
 }
 
