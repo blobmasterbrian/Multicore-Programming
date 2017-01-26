@@ -9,12 +9,16 @@ namespace set
     class Set
     {
     public:
-        int insert(int key);
+        Set();
+
         bool find(int key);
+        int insert(int key);
         int del(int key);
 
     private:
         std::vector<Object> set;
+
+        void rehash();
     };
 }
 
