@@ -9,16 +9,19 @@ namespace set
     class Set
     {
     public:
-        Set();
+        Set(int cap = 201);
 
-        bool find(int key);
-        int insert(int key);
-        int del(int key);
+        bool find(Object key);
+        int insert(Object key);
+        int del(Object key);
 
     private:
+        int capacity;
         std::vector<Object> set;
 
-        void rehash();
+        size_t find_idx(Object key);
+        // void rehash();
+        // unused for this case
     };
 }
 
