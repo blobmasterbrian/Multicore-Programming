@@ -3,6 +3,7 @@
 
 // needed forward declarations
 #include "Set.hpp"
+// #include <iostream>  // test collision probability
 
 template<class Object>  // templates must be redeclared
 set::Set<Object>::Set(int cap): capacity(cap)
@@ -41,6 +42,7 @@ int set::Set<Object>::insert(Object key)
     // use find, insert empty, else check equal, linear probe if not
     std::hash<Object> hasher;             // create hash object of corresponding type
     size_t idx = hasher(key) % capacity;  // calculate index
+    // std::cout << '(' << idx << ')';    // test collision probability
     size_t i = idx;                       // temporary variable for linear probing
     do {
         if (set[i] == -1 || set[i] == '\0') {  // insert if empty
