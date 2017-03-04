@@ -1,6 +1,7 @@
 #include "ThreadSafeKVStore.hpp"
 #include "ThreadSafeListenerQueue.hpp"
 #include <unistd.h>
+#include <pthread.h>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -16,9 +17,9 @@ struct packagedClass
     packagedClass(ThreadSafeKVStore<std::string,int32_t>* ht, ThreadSafeListenerQueue<int32_t>* l, int tid): thread_id(tid), hashtable(ht), listener(l)
     {
         std::random_device key_seed;   // key seed
-        sleep(1);                      // ensure seeds are different
+        usleep(5);                      // ensure seeds are different
         std::random_device val_seed;   // value seed
-        sleep(1);                      // ensure seeds are different
+        usleep(5);                      // ensure seeds are different
         std::random_device prob_seed;  // probability seed
 
         std::uniform_int_distribution<int> diskey(0,500);  // allows change of parameters after initialization
@@ -66,10 +67,12 @@ void panic(const char* msg) {
 void* testfunction(void* arg)
 {
     packagedClass* package = (packagedClass*)arg;  // organize arg as a packagedClass
-    std::cout << "Creating thread " << package->thread_id << "..." << std::endl;
+    std::string output = "[Thread " + std::to_string(package->thread_id) + "] Creating thread...\n";
+    std::cout << output;
     std::time_t ct = std::chrono::system_clock::to_time_t(package->creation_time);  // convert to time_t type
     std::tm* pt = std::localtime(&ct);  // convert to tm type
-    std::cout << "Thread created at: " << pt->tm_hour << ':' << pt->tm_min << ':' << pt->tm_sec << std::endl;  // print creation time
+    output = "[Thread " + std::to_string(package->thread_id) + "] Thread created at: " + std::to_string(pt->tm_hour) + ':' + std::to_string(pt->tm_min) + ':' + std::to_string(pt->tm_sec) + '\n';
+    std::cout << output;  // print creation time
 
     std::random_device rd;
     std::mt19937 rand_key(rd());
@@ -77,6 +80,7 @@ void* testfunction(void* arg)
     long sum = 0;
     std::vector<std::string> keys;
     for (int i = 0; i <= 10000; ++i) {
+        std::string output;
         if (package->prob_dis(package->prob_gen) <= 20.0) {  // check for 20% probability
             std::string key = "User";
             int user_id = package->key_dis(package->key_gen);    // generate random number for key
@@ -84,7 +88,8 @@ void* testfunction(void* arg)
             int32_t val = package->val_dis(package->val_gen);    // generate random number for value
 
             if (package->hashtable->accumulate(key,val) == 0) {  // add value parameter to current value at key
-                std::cout << "[Thread " << package->thread_id << "] " << "<Key,Value> : " << key << ',' << val << " accumulated" << std::endl;  // print successful accumulation
+                output = "[Thread " + std::to_string(package->thread_id) + "] Key,Value: <" + key + ',' + std::to_string(val) + "> accumulated\n";
+                std::cout << output;  // print successful accumulation
                 keys.push_back(key);  // push into vector of keys
             }
             sum += val;  // add value to sum
@@ -99,14 +104,15 @@ void* testfunction(void* arg)
             if (package->hashtable->lookup(lookup, value) != 0) {
                 panic("FATAL ERROR: lost key");  // lost keys
             }
-            std::cout << "[Thread " << package->thread_id << "] " << "Key: " << lookup << " found" << std::endl;  // print found key
-            std::cout << "[Thread " << package->thread_id << "] " << "Value: " << value << std::endl;  // print value of key
+            output = "[Thread " + std::to_string(package->thread_id) + "] Key: " + lookup + " found\n" + "[Thread " + std::to_string(package->thread_id) + "] Value: " + std::to_string(value) + '\n';
+            std::cout << output;  // print value of key
         }
     }
     package->listener->push(sum);
-
-    std::cout << "Terminating thread " << package->thread_id << "..." << std::endl;
-    std::cout << "Completed in " << std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() - package->start_time).count() << " seconds" << std::endl;  // print thread duration
+    output = "[Thread " + std::to_string(package->thread_id) + "] Terminating thread...\n";
+    std::cout << output;
+    output = "[Thread " + std::to_string(package->thread_id) + "] Completed in " + std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - package->start_time).count()) + " milliseconds\n";
+    std::cout << output;  // print thread duration
     pthread_exit(NULL);  // exit thread
 }
 
@@ -127,9 +133,12 @@ int main(int argc, char* argv[])
                 ThreadSafeListenerQueue<int32_t> listener;         // declare queue
 
                 std::chrono::steady_clock::time_point start_time = std::chrono::steady_clock::now();  // set total start time
-                for (int i = 1; i <= num_threads; ++i) {
-                    packagedClass* tharg = new packagedClass(&hashtable, &listener, i);  // initialize class package
+                for (int i = 0; i < num_threads; ++i) {
+                    packagedClass* tharg = new packagedClass(&hashtable, &listener, i+1);  // initialize class package
                     pthread_create(&threads[i], NULL, testfunction, (void*)tharg);  // create threads for test function
+                }
+                for (int i = 0; i < num_threads; ++i) {
+                    pthread_join(threads[i],NULL);
                 }
 
                 int32_t thread_sum = 0;
@@ -147,13 +156,18 @@ int main(int argc, char* argv[])
                 std::chrono::system_clock::time_point end_time = std::chrono::system_clock::now();  // create end time variable
                 std::time_t et = std::chrono::system_clock::to_time_t(end_time);  // convert to time_t type
                 std::tm* pt = std::localtime(&et);  // convert to tm type
-                std::cout << "All threads completed by " << pt->tm_hour << ':' << pt->tm_min << ':' << pt->tm_sec << " in " << std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() - start_time).count() << " seconds" << std::endl << std::endl;  // print function end time and duration
-                std::cout << "Sum of thread values: " << thread_sum << std::endl;
-                std::cout << "Sum of map elements:  " << map_sum << std::endl;
+                std::string output = "[Main] All threads completed by " + std::to_string(pt->tm_hour) + ':' + std::to_string(pt->tm_min) + ':' + std::to_string(pt->tm_sec) + " in " + std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start_time).count()) + " milliseconds\n\n";
+                std::cout << output;  // print function end time and duration
+                output = "[Main] Sum of thread values: " + std::to_string(thread_sum) + '\n';
+                std::cout << output;
+                output = "[Main] Sum of map elements:  " + std::to_string(map_sum) + '\n';
+                std::cout << output;
                 if (thread_sum == map_sum) {
-                    std::cout << "Thread-Safe: No values lost" << std::endl;  // print success case
+                    output = "\nThread-Safe: No values lost\n";
+                    std::cout << output;  // print success case
                 } else {
-                    std::cout << "ERROR: NOT THREAD-SAFE (" << thread_sum - map_sum << " sum lost)" << std::endl;  // print unsafe error
+                    output = "\nERROR: NOT THREAD-SAFE (" + std::to_string(abs(thread_sum - map_sum)) + " sum lost)\n";
+                    std::cout << output;  // print unsafe error
                 }
                 break;
         }

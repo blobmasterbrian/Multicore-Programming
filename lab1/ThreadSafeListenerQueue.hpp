@@ -21,7 +21,7 @@ namespace parallel_queue
     private:
         std::list<T> listener;   //  queue for pushing/popping values
         sem_t* sem;              //  semaphore for blocking
-        pthread_rwlock_t* lock;  //  lock for reading and writing queue
+        pthread_rwlock_t lock;  //  lock for reading and writing queue
     };
 }
 

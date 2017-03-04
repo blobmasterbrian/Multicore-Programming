@@ -25,9 +25,9 @@ namespace parallel_hash
         typename std::unordered_map<K,V>::iterator end();  // returns an iterator to location just past the last element in the underlying unordered_map
 
     private:
-        pthread_mutex_t* creation_lock;     // lock to resolve collisions creating bucket locks
+        pthread_mutex_t creation_lock;     // lock to resolve collisions creating bucket locks
         std::unordered_map<K,V> hashtable;  // templated hashtable
-        std::unordered_map<typename std::unordered_map<K,V>::size_type, pthread_rwlock_t*> bucket_locks;  // hashtable for each bucket's associated lock (<key,value> = <bucket,lock>)
+        std::unordered_map<typename std::unordered_map<K,V>::size_type, pthread_rwlock_t> bucket_locks;  // hashtable for each bucket's associated lock (<key,value> = <bucket,lock>)
     };
 }
 
