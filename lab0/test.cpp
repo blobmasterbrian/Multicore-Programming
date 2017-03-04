@@ -85,7 +85,7 @@ void charTests() {
     std::cout << std::endl;
 }
 
-int main()
+int main(int argc, char* argv[])
 {
     for (size_t i = 0; i < 10; ++i) {
         intTests();
