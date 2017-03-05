@@ -16,11 +16,11 @@ struct packagedClass
 {
     packagedClass(ThreadSafeKVStore<std::string,int32_t>* ht, ThreadSafeListenerQueue<int32_t>* l, int tid): thread_id(tid), hashtable(ht), listener(l)
     {
-        std::random_device key_seed;   // key seed
-        usleep(5);                      // ensure seeds are different
-        std::random_device val_seed;   // value seed
-        usleep(5);                      // ensure seeds are different
-        std::random_device prob_seed;  // probability seed
+        std::random_device key_seed;  // key seed
+        usleep(5);                    // ensure seeds are different
+        std::random_device val_seed;  // value seed
+        usleep(5);                    // ensure seeds are different
+        std::random_device prob_seed; // probability seed
 
         std::uniform_int_distribution<int> diskey(0,500);  // allows change of parameters after initialization
         key_gen.seed(key_seed());       // seeding
@@ -60,7 +60,7 @@ struct packagedClass
 // simple function for unexpected calls
 void panic(const char* msg) {
     printf("%s\n", msg);
-    exit(1);
+    // exit(1);
 }
 
 
@@ -113,7 +113,7 @@ void* testfunction(void* arg)
     std::cout << output;
     output = "[Thread " + std::to_string(package->thread_id) + "] Completed in " + std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - package->start_time).count()) + " milliseconds\n";
     std::cout << output;  // print thread duration
-    pthread_exit(NULL);  // exit thread
+    pthread_exit(NULL);   // exit thread
 }
 
 
@@ -127,15 +127,15 @@ int main(int argc, char* argv[])
     while((c = getopt(argc,argv,"n:")) != -1) {  // get option and argument
         switch(c) {
             case 'n':
-                int num_threads = std::stoi(optarg);               // set number of threads
-                pthread_t threads[num_threads];                    // create array of threads
-                ThreadSafeKVStore<std::string,int32_t> hashtable;  // declare hashtable
-                ThreadSafeListenerQueue<int32_t> listener;         // declare queue
+                int num_threads = std::stoi(optarg);  // set number of threads
+                pthread_t threads[num_threads];       // create array of threads
+                ThreadSafeKVStore<std::string,int32_t>* hashtable = new ThreadSafeKVStore<std::string,int32_t>();  // declare hashtable
+                ThreadSafeListenerQueue<int32_t>* listener = new ThreadSafeListenerQueue<int32_t>();               // declare queue
 
                 std::chrono::steady_clock::time_point start_time = std::chrono::steady_clock::now();  // set total start time
                 for (int i = 0; i < num_threads; ++i) {
-                    packagedClass* tharg = new packagedClass(&hashtable, &listener, i+1);  // initialize class package
-                    pthread_create(&threads[i], NULL, testfunction, (void*)tharg);  // create threads for test function
+                    packagedClass* tharg = new packagedClass(hashtable, listener, i+1);  // initialize class package
+                    pthread_create(&threads[i], NULL, testfunction, (void*)tharg);       // create threads for test function
                 }
                 for (int i = 0; i < num_threads; ++i) {
                     pthread_join(threads[i],NULL);
@@ -143,13 +143,13 @@ int main(int argc, char* argv[])
 
                 int32_t thread_sum = 0;
                 for (size_t i = 1; i <= num_threads; ++i) {
-                    int32_t thread_retval = 0;       // return value for listening
-                    listener.listen(thread_retval);  // set thread return value to popped element
-                    thread_sum += thread_retval;     // add thread return value to sum
+                    int32_t thread_retval = 0;        // return value for listening
+                    listener->listen(thread_retval);  // set thread return value to popped element
+                    thread_sum += thread_retval;      // add thread return value to sum
                 }
 
                 int32_t map_sum = 0;
-                for (std::unordered_map<std::string,int32_t>::iterator itr = hashtable.begin(); itr != hashtable.end(); ++itr) {
+                for (std::unordered_map<std::string,int32_t>::iterator itr = hashtable->begin(); itr != hashtable->end(); ++itr) {
                     map_sum += itr->second;
                 }
 
