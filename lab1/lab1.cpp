@@ -60,7 +60,7 @@ struct packagedClass
 // simple function for unexpected calls
 void panic(const char* msg) {
     printf("%s\n", msg);
-    // exit(1);
+    exit(1);
 }
 
 
@@ -80,7 +80,6 @@ void* testfunction(void* arg)
     long sum = 0;
     std::vector<std::string> keys;
     for (int i = 0; i <= 10000; ++i) {
-        std::string output;
         if (package->prob_dis(package->prob_gen) <= 20.0) {  // check for 20% probability
             std::string key = "User";
             int user_id = package->key_dis(package->key_gen);    // generate random number for key
