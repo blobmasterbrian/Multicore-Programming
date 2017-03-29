@@ -88,7 +88,7 @@ void* testfunction(void* arg)
 
             if (package->hashtable->accumulate(key,val) == 0) {  // add value parameter to current value at key
                 output = "[Thread " + std::to_string(package->thread_id) + "] Key,Value: <" + key + ',' + std::to_string(val) + "> accumulated\n";
-                std::cout << output;  // print successful accumulation
+                // std::cout << output;  // print successful accumulation
                 keys.push_back(key);  // push into vector of keys
             }
             sum += val;  // add value to sum
@@ -104,7 +104,7 @@ void* testfunction(void* arg)
                 panic("FATAL ERROR: lost key");  // lost keys
             }
             output = "[Thread " + std::to_string(package->thread_id) + "] Key: " + lookup + " found\n" + "[Thread " + std::to_string(package->thread_id) + "] Value: " + std::to_string(value) + '\n';
-            std::cout << output;  // print value of key
+            // std::cout << output;  // print value of key
         }
     }
     package->listener->push(sum);

@@ -7,7 +7,25 @@
 
 namespace parallel_hash
 {
-    pthread_rwlock_t rehash_lock;
+    class wrp_lock
+    {
+    public:
+        wrp_lock();
+        void read_lock();
+        void read_unlock();
+        void write_lock();
+        void write_unlock();
+    private:
+        int rd_count;
+        int wr_count;
+
+        pthread_mutex_t rd_mut;
+        pthread_mutex_t wr_mut;
+        pthread_mutex_t rd_lock;
+        pthread_mutex_t wr_lock;
+    };
+
+    wrp_lock rehash_lock;
 
     template<class K, class V>
     class ThreadSafeKVStore
