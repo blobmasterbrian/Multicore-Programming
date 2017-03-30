@@ -17,6 +17,7 @@ TPServer::ThreadPoolServer<K,V>::packagedClass::packagedClass(int tid, ThreadSaf
 
 template<class K, class V>
 TPServer::ThreadPoolServer<K,V>::ValueContainer::ValueContainer(V data, const char* pepper, uchar*(*encryption)(const char* pass, const uchar* salt)): value(data), salt(pepper) {
+    this->salt = std::string((char*)salt);
     uchar* hashval = (*encryption)(data.c_str(), pepper);
     this->hash = std::string((char*)hashval);
 }
@@ -36,7 +37,6 @@ TPServer::ThreadPoolServer<K,V>::ThreadPoolServer(int threads, ThreadSafeKVStore
 template<class K, class V>
 TPServer::ThreadPoolServer<K,V>::~ThreadPoolServer()
 {
-    // delete threads
     delete taskqueue;
 }
 
@@ -143,6 +143,7 @@ void TPServer::ThreadPoolServer<K,V>::create_worker_thread(void* arg)
         }
         package->tq->push(fd);
     }
+    pthread_exit(NULL);
 }
 
 
