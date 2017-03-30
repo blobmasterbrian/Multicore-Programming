@@ -93,7 +93,7 @@ void TPServer::ThreadPoolServer<K,V>::create_worker_thread(void* arg)
         } else if (request.getMethod() == "POST") {
             package->ht->insert(request.getURI(), request.getBody());
         } else if (request.getMethod() == "DELETE") {
-            package->ht->remove(request.getURI);
+            package->ht->remove(request.getURI());
         } else {
 
         }
