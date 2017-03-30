@@ -3,7 +3,15 @@
 
 #include "ThreadSafeStructures/ThreadSafeKVStore.hpp"
 #include "ThreadSafeStructures/ThreadSafeListenerQueue.hpp"
+#include "httpreq/httpreq.hpp"
+#include "httpreq/httpresp.hpp"
+#include "bcrypt/blf.h"
+#include "bcrypt/blf.c"
+#include "bcrypt/bcrypt.h"
 #include "bcrypt/bcrypt.c"
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
 #include <string>
 #include <vector>
 
@@ -18,7 +26,7 @@ namespace TPServer
     class ThreadPoolServer
     {
     public:
-        ThreadPoolServer(int threads, ThreadSafeKVStore<K,V> hashmap);
+        ThreadPoolServer(int threads, ThreadSafeKVStore<K,V>& hashmap);
         ~ThreadPoolServer();
 
         void start_server(const int port);

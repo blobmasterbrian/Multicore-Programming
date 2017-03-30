@@ -2,11 +2,6 @@
 #define TPS_CPP
 
 #include "ThreadPoolServer.hpp"
-#include "httpreq/httpreq.hpp"
-#include "httpreq/httpresp.hpp"
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
 
 
 // simple function for unexpected calls
@@ -21,7 +16,7 @@ TPServer::ThreadPoolServer<K,V>::packagedClass::packagedClass(int tid, ThreadSaf
 
 
 template<class K, class V>
-TPServer::ThreadPoolServer<K,V>::ThreadPoolServer(int threads, ThreadSafeKVStore<K,V> hashmap): num_threads(threads), hashtable(&hashmap)
+TPServer::ThreadPoolServer<K,V>::ThreadPoolServer(int threads, ThreadSafeKVStore<K,V>& hashmap): num_threads(threads), hashtable(&hashmap)
 {
     taskqueue = new ThreadSafeListenerQueue<int>();
     for (size_t i = 0; i < num_threads; ++i) {

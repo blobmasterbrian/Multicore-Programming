@@ -16,10 +16,6 @@
 
 #include "httpreq.hpp"
 
-#include <string>
-#include <string.h>
-#include <iostream>
-#include <errno.h>
 
 HTTPReq::HTTPReq(const int sock_fd)
 	: parsed_(false)

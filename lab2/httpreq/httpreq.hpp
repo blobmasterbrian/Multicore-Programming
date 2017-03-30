@@ -16,7 +16,11 @@
 
 #pragma once
 #include <string>
+#include <string.h>
+#include <iostream>
+#include <errno.h>
 #include <unistd.h>
+
 
 // Parses the headers and body out of a HTTP request
 class HTTPReq {
