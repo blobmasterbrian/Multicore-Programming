@@ -1,5 +1,5 @@
-gcc -c bcrypt/blf.c -o bcrypt/blf.o
-gcc -c bcrypt/bcrypt.c -o bcrypt/bcrypt.o
+g++ -c bcrypt/blf.c -o bcrypt/blf.o
+g++ -c bcrypt/bcrypt.c -o bcrypt/bcrypt.o
 
 g++ -c httpreq/httpreq.cc -o httpreq/httpreq.o -std=c++11
 g++ -c httpreq/httpresp.cc -o httpreq/httpresp.o -std=c++11

@@ -12,10 +12,10 @@ static void TPServer::panic(const char* msg)
 }
 
 
-static uchar * TPServer::bcrypt_driver(const char *pass, const uchar *salt)
-{
-    return bcrypt(pass, salt);
-}
+// static uchar * TPServer::bcrypt_driver(const char *pass, const uchar *salt)
+// {
+//     return bcrypt(pass, salt);
+// }
 
 
 template<class T>

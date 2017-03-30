@@ -20,13 +20,13 @@ using namespace parallel_queue;
 namespace TPServer
 {
     static inline void panic(const char* msg);
-    static inline uchar * bcrypt_driver(const char *pass, const uchar *salt);
+    // static inline uchar * bcrypt_driver(const char *pass, const uchar *salt);
 
     template<class T>
     struct ValueContainer
     {
-        ValueContainer(uchar*(*encryption)(const char* pass, const uchar* salt) = bcrypt_driver) {};
-        ValueContainer(T& data, const uchar* pepper, uchar*(*encryption)(const char* pass, const uchar* salt) = bcrypt_driver);
+        ValueContainer(uchar*(*encryption)(const char* pass, const uchar* salt) = bcrypt) {};
+        ValueContainer(T& data, const uchar* pepper, uchar*(*encryption)(const char* pass, const uchar* salt) = bcrypt);
         T value;
         std::string hash;
         std::string salt;
