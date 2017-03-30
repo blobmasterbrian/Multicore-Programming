@@ -9,13 +9,7 @@
 #include <ctime>
 #include <chrono>
 
-
-// simple function for unexpected calls
-void panic(const char* msg) {
-    printf("%s\n", msg);
-    exit(1);
-}
-
+using namespace TPServer;
 
 int main(int argc, char* argv[])
 {

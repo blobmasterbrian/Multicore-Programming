@@ -1,6 +1,6 @@
 // httpreq.hpp - HTTP Request Parser
 // (c) 2017 Christopher Mitchell, Ph.D.
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
@@ -35,13 +35,13 @@ class HTTPReq {
 	const double getVersion(void) const;
 	const bool isMalformed(void) const;
 
-	friend std::ostream& operator<<(std::ostream& os, const HTTPReq& req);  
+	friend std::ostream& operator<<(std::ostream& os, const HTTPReq& req);
 
   private:
 	const int sock_fd_;
 	bool parsed_;
 	bool malformed_;
-	
+
 	std::string method_;
 	std::string uri_;
 	std::string body_;

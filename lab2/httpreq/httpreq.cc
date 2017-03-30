@@ -1,6 +1,6 @@
 // httpreq.cc - HTTP Request Parser
 // (c) 2017 Christopher Mitchell, Ph.D.
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
@@ -43,7 +43,7 @@ int HTTPReq::parse(void) {
 
 	char method[255], uri[255];
 	int rval;
-	if (3 != (rval = sscanf(method_line.c_str(), "%254s %254s HTTP/%lf", 
+	if (3 != (rval = sscanf(method_line.c_str(), "%254s %254s HTTP/%lf",
 		            method, uri, &version_))) {
 		std::cerr << "Failed to scan request method/type from request (got " << rval
 		          << " pieces)" << std::endl;
@@ -93,7 +93,7 @@ int HTTPReq::parse(void) {
 	} else {
 		body_ = "";
 	}
-	
+
 
 	malformed_ = false;
 	return 0;

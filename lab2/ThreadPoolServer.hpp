@@ -3,6 +3,7 @@
 
 #include "ThreadSafeStructures/ThreadSafeKVStore.hpp"
 #include "ThreadSafeStructures/ThreadSafeListenerQueue.hpp"
+#include "bcrypt/bcrypt.c"
 #include <string>
 #include <vector>
 
@@ -12,7 +13,7 @@ using namespace parallel_queue;
 namespace TPServer
 {
     void panic(const char* msg);
-    
+
     template<class K, class V>
     class ThreadPoolServer
     {
@@ -20,7 +21,7 @@ namespace TPServer
         ThreadPoolServer(int threads, ThreadSafeKVStore<K,V> hashmap);
         ~ThreadPoolServer();
 
-        void start_server(const std::string&& host, const int port);
+        void start_server(const int port);
 
     private:
         int num_threads;
@@ -28,7 +29,7 @@ namespace TPServer
         ThreadSafeListenerQueue<int>* taskqueue;
         std::vector<pthread_t> threadpool;
 
-        void socket_listen(const std::string& host, const int port);
+        void socket_listen(const int port);
         static void create_worker_thread(void* arg);
 
         struct packagedClass
@@ -37,6 +38,15 @@ namespace TPServer
             int thread_id;
             ThreadSafeKVStore<K,V>* ht;
             ThreadSafeListenerQueue<int>* tq;
+        };
+
+        typedef uchar*(*encryption)(const char* pass, const uchar* salt);
+        struct ValueContainer
+        {
+            ValueContainer(V data, const char* pepper, encryption = bcrypt);
+            V value;
+            std::string hash;
+            std::string salt;
         };
     };
 }

@@ -40,18 +40,18 @@ TPServer::ThreadPoolServer<K,V>::~ThreadPoolServer()
 
 
 template<class K, class V>
-void TPServer::ThreadPoolServer<K,V>::start_server(const std::string&& host, const int port)
+void TPServer::ThreadPoolServer<K,V>::start_server(const int port)
 {
     for (size_t i = 0; i < threadpool.size(); ++i) {
         packagedClass* tharg = new packagedClass(i+1, this->hashtable, this->taskqueue);
         pthread_create(&threadpool[i], NULL, create_worker_thread, (void*)tharg);
     }
-    socket_listen(host, port);
+    socket_listen(port);
 }
 
 
 template<class K, class V>
-void TPServer::ThreadPoolServer<K,V>::socket_listen(const std::string& host, const int port)
+void TPServer::ThreadPoolServer<K,V>::socket_listen(const int port)
 {
     int serv_fd, cli_fd;
     struct sockaddr_in serv_addr, cli_addr;
@@ -60,10 +60,10 @@ void TPServer::ThreadPoolServer<K,V>::socket_listen(const std::string& host, con
     if (serv_fd < 0) {
         panic("Socket Error");
     }
+    bzero((char *) &serv_addr, sizeof(serv_addr));
     serv_addr.sin_family = AF_INET;
     serv_addr.sin_addr.s_addr = INADDR_ANY;
     serv_addr.sin_port = htons(port);
-    bzero((char *) &serv_addr, sizeof(serv_addr));
     if (bind(serv_fd, (struct sockaddr*)&serv_addr, sizeof(serv_addr)) < 0) {
         panic("Binding Error");
     }
@@ -85,6 +85,10 @@ void TPServer::ThreadPoolServer<K,V>::create_worker_thread(void* arg)
     while (true) {
         int fd;
         package->tq->listen(fd);
+        HTTPReq request(fd);
+        if (request.parse() != 0) {
+            continue;
+        }
 
     }
 }
