@@ -49,10 +49,10 @@ namespace TPServer
             ThreadSafeListenerQueue<int>* tq;
         };
 
-        typedef uchar*(*encryption)(const char* pass, const uchar* salt);
+        // typedef uchar*(*encryption)(const char* pass, const uchar* salt);
         struct ValueContainer
         {
-            ValueContainer(V data, const char* pepper, encryption = bcrypt);
+            ValueContainer(V data, const char* pepper, uchar*(*encryption)(const char* pass, const uchar* salt) = bcrypt);
             V value;
             std::string hash;
             std::string salt;

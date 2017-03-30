@@ -16,6 +16,13 @@ TPServer::ThreadPoolServer<K,V>::packagedClass::packagedClass(int tid, ThreadSaf
 
 
 template<class K, class V>
+TPServer::ThreadPoolServer<K,V>::ValueContainer::ValueContainer(V data, const char* pepper, uchar*(*encryption)(const char* pass, const uchar* salt)): value(data), salt(pepper) {
+    uchar* hashval = (*encryption)(data.c_str(), pepper);
+    this->hash = std::string((char*)hashval);
+}
+
+
+template<class K, class V>
 TPServer::ThreadPoolServer<K,V>::ThreadPoolServer(int threads, ThreadSafeKVStore<K,V>& hashmap): num_threads(threads), hashtable(&hashmap)
 {
     taskqueue = new ThreadSafeListenerQueue<int>();
