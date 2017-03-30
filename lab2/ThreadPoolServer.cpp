@@ -8,7 +8,7 @@
 static void TPServer::panic(const char* msg)
 {
     printf("%s\n", msg);
-    exit(1);
+    // exit(1);
 }
 
 
@@ -81,6 +81,9 @@ void TPServer::ThreadPoolServer<K,V>::socket_listen(const int port)
     while (true) {
         char buffer[32];
         cli_fd = accept(serv_fd, (struct sockaddr*)&cli_addr, (socklen_t*)sizeof(cli_addr));
+        if (cli_fd < 0) {
+            continue;
+        }
         if (recv(cli_fd, buffer, sizeof(buffer), MSG_PEEK | MSG_DONTWAIT) == 0) {
             close(cli_fd);
             continue;
