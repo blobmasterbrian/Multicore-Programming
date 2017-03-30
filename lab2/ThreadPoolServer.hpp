@@ -6,9 +6,7 @@
 #include "httpreq/httpreq.hpp"
 #include "httpreq/httpresp.hpp"
 #include "bcrypt/blf.h"
-#include "bcrypt/blf.c"
 #include "bcrypt/bcrypt.h"
-#include "bcrypt/bcrypt.c"
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -21,7 +19,7 @@ using namespace parallel_queue;
 
 namespace TPServer
 {
-    void panic(const char* msg);
+    static inline void panic(const char* msg);
 
     template<class K, class V>
     class ThreadPoolServer

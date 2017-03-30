@@ -1,5 +1,4 @@
 #include "ThreadPoolServer.hpp"
-#include "ThreadPoolServer.cpp"
 #include <unistd.h>
 #include <pthread.h>
 #include <iostream>

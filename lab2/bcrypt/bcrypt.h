@@ -1,3 +1,6 @@
+#ifndef BCRYPT_H
+#define BCRYPT_H
+
 typedef unsigned char uchar;
 typedef unsigned char uint8_t;
 typedef unsigned char u_int8_t;
@@ -42,3 +45,5 @@ int bcrypt_checkpass(const char *pass, const uchar *salt, const uchar *goodhash)
  *     BCRYPT_HASHLEN bytes long.
  */
 uchar * bcrypt(const char *pass, const uchar *salt);
+
+#endif

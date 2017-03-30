@@ -5,7 +5,7 @@
 
 
 // simple function for unexpected calls
-void TPServer::panic(const char* msg) {
+static void TPServer::panic(const char* msg) {
     printf("%s\n", msg);
     exit(1);
 }
