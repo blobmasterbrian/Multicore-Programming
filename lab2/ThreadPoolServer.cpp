@@ -64,8 +64,10 @@ void TPServer::ThreadPoolServer<K,V>::socket_listen(const int port)
     }
     listen(serv_fd, 100);
     while (true) {
+        char buffer[32];
         cli_fd = accept(serv_fd, (struct sockaddr*)&cli_addr, (socklen_t*)sizeof(cli_addr));
-        if (cli_fd < 0) {
+        if (recv(cli_fd, buffer, sizeof(buffer), MSG_PEEK | MSG_DONTWAIT) == 0) {
+            close(cli_fd);
             continue;
         }
         this->taskqueue.push(cli_fd);
@@ -82,9 +84,20 @@ void TPServer::ThreadPoolServer<K,V>::create_worker_thread(void* arg)
         package->tq->listen(fd);
         HTTPReq request(fd);
         if (request.parse() != 0) {
+            package->tq->push(fd);
             continue;
         }
 
+        if (request.getMethod() == "GET") {
+            package->ht->lookup(request.getURI());
+        } else if (request.getMethod() == "POST") {
+            package->ht->insert(request.getURI(), request.getBody());
+        } else if (request.getMethod() == "DELETE") {
+            package->ht->remove(request.getURI);
+        } else {
+
+        }
+        package->tq->push(fd);
     }
 }
 
