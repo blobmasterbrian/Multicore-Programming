@@ -88,14 +88,51 @@ void TPServer::ThreadPoolServer<K,V>::create_worker_thread(void* arg)
             continue;
         }
 
-        if (request.getMethod() == "GET") {
-            package->ht->lookup(request.getURI());
-        } else if (request.getMethod() == "POST") {
-            package->ht->insert(request.getURI(), request.getBody());
-        } else if (request.getMethod() == "DELETE") {
-            package->ht->remove(request.getURI());
-        } else {
+        std::string method = request.getMethod();
+        std::string key = request.getURI();
+        std::string val = request.getBody();
 
+        uchar salt[BCRYPT_SALTLEN];
+        std::mt19937 salt_gen;
+        std::random_device salt_seed;
+        std::uniform_int_distribution<int> salt_dis(33,125);
+        salt_gen.seed(salt_seed);
+        for (size_t i = 0; i < BCRYPT_SALTLEN; ++i) {
+            salt[i] = (uchar)salt_dis(salt_gen);
+        }
+        ValueContainer KVPair(val,salt);
+
+        if (method == "GET") {
+            if (package->ht->lookup(key) == 0) {
+                HTTPResp response(200, "Key Found"); // 200 OK
+                std::string output = response.getResponse();
+                write(fd, output.c_str(), output.size());
+            } else {
+                HTTPResp response(404, "Key NOT Found"); // 404 NOT FOUND
+                std::string output = response.getResponse();
+                write(fd, output.c_str(), output.size());
+            }
+        } else if (method == "POST") {
+            if (package->ht->insert(key, KVPair) == 0) {
+                HTTPResp response(200, "Key/Value Inserted"); // 200 OK
+                std::string output = response.getResponse();
+                write(fd, output.c_str(), output.size());
+            }
+        } else if (method == "DELETE") {
+            if (package->ht->lookup(key) == 0) {
+                package->ht->remove(key);
+                HTTPResp response(200, "Key/Value Destroyed"); // 200 OK
+                std::string output = response.getResponse();
+                write(fd, output.c_str(), output.size());
+            } else {
+                HTTPResp response(404, "No Object to Destroy"); // 404 NOT FOUND
+                std::string output = response.getResponse();
+                write(fd, output.c_str(), output.size());
+            }
+        } else {
+            HTTPResp response(400, "Unsupported Method");
+            std::string output = response.getResponse();
+            write(fd, output.c_str(), output.size());
         }
         package->tq->push(fd);
     }

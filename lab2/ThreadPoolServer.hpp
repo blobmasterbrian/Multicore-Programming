@@ -14,6 +14,7 @@
 #include <netinet/in.h>
 #include <string>
 #include <vector>
+#include <random>
 
 using namespace parallel_hash;
 using namespace parallel_queue;
