@@ -62,7 +62,7 @@ bcrypt_hashpass(const char *key, const uchar *csalt, uchar *encrypted, uint8_t l
 	u_int16_t j;
 	size_t key_len;
 	u_int8_t salt_len;
-	u_int8_t ciphertext[4 * BCRYPT_WORDS + 1] = "OrpheanBeholderScryDoubt";
+	u_int8_t ciphertext[4 * BCRYPT_WORDS] = "OrpheanBeholderScryDoubt";
 	u_int32_t cdata[BCRYPT_WORDS];
 
     /* strlen() returns a size_t, but the function calls
