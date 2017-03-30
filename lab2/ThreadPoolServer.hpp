@@ -20,6 +20,17 @@ using namespace parallel_queue;
 namespace TPServer
 {
     static inline void panic(const char* msg);
+    static inline uchar * bcrypt_driver(const char *pass, const uchar *salt);
+
+    template<class T>
+    struct ValueContainer
+    {
+        ValueContainer(uchar*(*encryption)(const char* pass, const uchar* salt) = bcrypt_driver) {};
+        ValueContainer(T& data, const uchar* pepper, uchar*(*encryption)(const char* pass, const uchar* salt) = bcrypt_driver);
+        T value;
+        std::string hash;
+        std::string salt;
+    };
 
     template<class K, class V>
     class ThreadPoolServer
@@ -37,7 +48,7 @@ namespace TPServer
         std::vector<pthread_t> threadpool;
 
         void socket_listen(const int port);
-        static void create_worker_thread(void* arg);
+        static void* create_worker_thread(void* arg);
 
         struct packagedClass
         {
@@ -45,15 +56,6 @@ namespace TPServer
             int thread_id;
             ThreadSafeKVStore<K,V>* ht;
             ThreadSafeListenerQueue<int>* tq;
-        };
-
-        // typedef uchar*(*encryption)(const char* pass, const uchar* salt);
-        struct ValueContainer
-        {
-            ValueContainer(V data, const char* pepper, uchar*(*encryption)(const char* pass, const uchar* salt) = bcrypt);
-            V value;
-            std::string hash;
-            std::string salt;
         };
     };
 }

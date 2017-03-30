@@ -1,4 +1,5 @@
 #include "ThreadPoolServer.hpp"
+#include "bcrypt/bcrypt.h"
 #include <unistd.h>
 #include <pthread.h>
 #include <iostream>
@@ -21,6 +22,9 @@ int main(int argc, char* argv[])
         switch(c) {
             case 'n':
                 int num_threads = std::stoi(optarg);  // set number of threads
+                ThreadSafeKVStore<std::string,ValueContainer<std::string>>* database = new ThreadSafeKVStore<std::string,ValueContainer<std::string>>();
+                ThreadPoolServer<std::string,ValueContainer<std::string>>* server = new ThreadPoolServer<std::string,ValueContainer<std::string>>(num_threads, *database);
+                server->start_server(8888);
         }
     }
     return 0;

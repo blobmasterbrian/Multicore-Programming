@@ -5,22 +5,30 @@
 
 
 // simple function for unexpected calls
-static void TPServer::panic(const char* msg) {
+static void TPServer::panic(const char* msg)
+{
     printf("%s\n", msg);
     exit(1);
 }
 
 
-template<class K, class V>
-TPServer::ThreadPoolServer<K,V>::packagedClass::packagedClass(int tid, ThreadSafeKVStore<K,V>* hashtable, ThreadSafeListenerQueue<int>* taskqueue): thread_id(tid), ht(hashtable), tq(taskqueue) {}
+static uchar * TPServer::bcrypt_driver(const char *pass, const uchar *salt)
+{
+    return bcrypt(pass, salt);
+}
 
 
-template<class K, class V>
-TPServer::ThreadPoolServer<K,V>::ValueContainer::ValueContainer(V data, const char* pepper, uchar*(*encryption)(const char* pass, const uchar* salt)): value(data), salt(pepper) {
-    this->salt = std::string((char*)salt);
-    uchar* hashval = (*encryption)(data.c_str(), pepper);
+template<class T>
+TPServer::ValueContainer<T>::ValueContainer(T& data, const uchar* pepper, uchar*(*encryption)(const char* pass, const uchar* salt)): value(data)
+{
+    this->salt = std::string((char*)pepper);
+    uchar* hashval = (*encryption)(data.c_str(), (const uchar*)pepper);
     this->hash = std::string((char*)hashval);
 }
+
+
+template<class K, class V>
+TPServer::ThreadPoolServer<K,V>::packagedClass::packagedClass(int tid, ThreadSafeKVStore<K,V>* hashtable, ThreadSafeListenerQueue<int>* taskqueue): thread_id(tid), ht(hashtable), tq(taskqueue) {}
 
 
 template<class K, class V>
@@ -77,13 +85,13 @@ void TPServer::ThreadPoolServer<K,V>::socket_listen(const int port)
             close(cli_fd);
             continue;
         }
-        this->taskqueue.push(cli_fd);
+        this->taskqueue->push(cli_fd);
     }
 }
 
 
 template<class K, class V>
-void TPServer::ThreadPoolServer<K,V>::create_worker_thread(void* arg)
+void* TPServer::ThreadPoolServer<K,V>::create_worker_thread(void* arg)
 {
     packagedClass* package = (packagedClass*)arg;
     while (true) {
@@ -103,14 +111,15 @@ void TPServer::ThreadPoolServer<K,V>::create_worker_thread(void* arg)
         std::mt19937 salt_gen;
         std::random_device salt_seed;
         std::uniform_int_distribution<int> salt_dis(33,125);
-        salt_gen.seed(salt_seed);
+        salt_gen.seed(salt_seed());
         for (size_t i = 0; i < BCRYPT_SALTLEN; ++i) {
             salt[i] = (uchar)salt_dis(salt_gen);
         }
-        ValueContainer KVPair(val,salt);
+        ValueContainer<std::string> KVPair(val,salt);
 
+        ValueContainer<std::string> waste;
         if (method == "GET") {
-            if (package->ht->lookup(key) == 0) {
+            if (package->ht->lookup(key, waste) == 0) {
                 HTTPResp response(200, "Key Found"); // 200 OK
                 std::string output = response.getResponse();
                 write(fd, output.c_str(), output.size());
@@ -126,7 +135,7 @@ void TPServer::ThreadPoolServer<K,V>::create_worker_thread(void* arg)
                 write(fd, output.c_str(), output.size());
             }
         } else if (method == "DELETE") {
-            if (package->ht->lookup(key) == 0) {
+            if (package->ht->lookup(key, waste) == 0) {
                 package->ht->remove(key);
                 HTTPResp response(200, "Key/Value Destroyed"); // 200 OK
                 std::string output = response.getResponse();
