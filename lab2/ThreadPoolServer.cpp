@@ -63,7 +63,7 @@ void TPServer::ThreadPoolServer<K,V>::socket_listen(const int port)
     int serv_fd, cli_fd;
     struct sockaddr_in serv_addr, cli_addr;
 
-    serv_fd = socket(AF_INET6, SOCK_STREAM, 0);
+    serv_fd = socket(AF_INET, SOCK_STREAM, 0);
     if (serv_fd < 0) {
         panic("Socket Error");
     }
