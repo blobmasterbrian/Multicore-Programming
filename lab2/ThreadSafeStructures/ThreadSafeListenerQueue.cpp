@@ -7,8 +7,11 @@
 template<class T>
 parallel_queue::ThreadSafeListenerQueue<T>::ThreadSafeListenerQueue()
 {
+    // sem_unlink("x");
+    // if((sem = sem_open("x",O_CREAT,0777,0))==SEM_FAILED){
+    //     perror("sem_open");
+    // }
     sem_init(&sem,0,0);
-    std::cout << sem << std::endl;
     pthread_rwlock_init(&lock,NULL);  // initialize queue lock
 }
 
@@ -26,7 +29,6 @@ int parallel_queue::ThreadSafeListenerQueue<T>::push(const T element)
 {
     pthread_rwlock_wrlock(&lock);  // lock for writing
     listener.push_front(element);  // push element onto queue
-
     sem_post(&sem);                // unblock listen function
     pthread_rwlock_unlock(&lock);  // release lock
     return 0;                      // return success
@@ -53,6 +55,9 @@ int parallel_queue::ThreadSafeListenerQueue<T>::pop(T& element)
 template<class T>
 int parallel_queue::ThreadSafeListenerQueue<T>::listen(T& element)
 {
+    std::cout << "test2\n";
+    std::cout<< sem <<std::endl;
+    std::cout << &sem << std::endl;
     sem_wait(&sem);                // block until queue is not empty
     pthread_rwlock_wrlock(&lock);  // lock for writing
     element = listener.back();     // set element parameter to element to be popped

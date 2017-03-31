@@ -12,12 +12,6 @@ static void TPServer::panic(const char* msg)
 }
 
 
-// static uchar * TPServer::bcrypt_driver(const char *pass, const uchar *salt)
-// {
-//     return bcrypt(pass, salt);
-// }
-
-
 template<class T>
 TPServer::ValueContainer<T>::ValueContainer(T& data, const uchar* pepper, uchar*(*encryption)(const char* pass, const uchar* salt)): value(data)
 {
@@ -53,10 +47,13 @@ template<class K, class V>
 void TPServer::ThreadPoolServer<K,V>::start_server(const int port)
 {
     for (size_t i = 0; i < threadpool.size(); ++i) {
-        packagedClass* tharg = new packagedClass(i+1, this->hashtable, this->taskqueue);
+        packagedClass* tharg = new packagedClass(i+1, hashtable, taskqueue);
         pthread_create(&threadpool[i], NULL, create_worker_thread, (void*)tharg);
     }
     socket_listen(port);
+    for (size_t i = 0; i < this->threadpool.size(); ++i) {
+        pthread_join(threadpool[i],NULL);
+    }
 }
 
 
@@ -100,6 +97,9 @@ void* TPServer::ThreadPoolServer<K,V>::create_worker_thread(void* arg)
     while (true) {
         int fd;
         package->tq->listen(fd);
+        if (fd < 0) {
+            continue;
+        }
         HTTPReq request(fd);
         if (request.parse() != 0) {
             package->tq->push(fd);
