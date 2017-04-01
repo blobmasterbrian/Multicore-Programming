@@ -19,43 +19,42 @@ using namespace parallel_queue;
 
 namespace TPServer
 {
-    static inline void panic(const char* msg);
-    // static inline uchar * bcrypt_driver(const char *pass, const uchar *salt);
+    static inline void panic(const char* msg);  // static function to avoid redefinition for other templates
 
     template<class T>
     struct ValueContainer
     {
-        ValueContainer(uchar*(*encryption)(const char* pass, const uchar* salt) = bcrypt) {};
-        ValueContainer(T& data, const uchar* pepper, uchar*(*encryption)(const char* pass, const uchar* salt) = bcrypt);
-        T value;
-        std::string hash;
-        std::string salt;
+        ValueContainer(uchar*(*encryption)(const char* pass, const uchar* salt) = bcrypt) {};  // default constructor
+        ValueContainer(T& data, const uchar* pepper, uchar*(*encryption)(const char* pass, const uchar* salt) = bcrypt);  // constructor given values
+        T value;           // value of content
+        std::string hash;  // hash value from encryption function pointer (default bcrypt)
+        std::string salt;  // salt storage
     };
 
     template<class K, class V>
     class ThreadPoolServer
     {
     public:
-        ThreadPoolServer(int threads, ThreadSafeKVStore<K,V>& hashmap);
-        ~ThreadPoolServer();
+        ThreadPoolServer(int threads, ThreadSafeKVStore<K,V>& hashmap);  // constructor that creates TSLQ on heap
+        ~ThreadPoolServer();  // destructor
 
-        void start_server(const int port);
+        void start_server(const int port);  // start server on given port
 
     private:
-        int num_threads;
-        ThreadSafeKVStore<K,V>* hashtable;
-        ThreadSafeListenerQueue<int>* taskqueue;
-        std::vector<pthread_t> threadpool;
+        int num_threads;                          // number of threads in threadpool
+        ThreadSafeKVStore<K,V>* hashtable;        // thread safe hashtable to process thread requests
+        ThreadSafeListenerQueue<int>* taskqueue;  // thread safe queue for pushing data to threads
+        std::vector<pthread_t> threadpool;        // threadpool to pull threads
 
-        void socket_listen(const int port);
-        static void* create_worker_thread(void* arg);
+        void socket_listen(const int port);            // listens on port for incoming connections to pass to threads
+        static void* create_worker_thread(void* arg);  // creates threads in the threapool
 
-        struct packagedClass
+        struct packagedClass  // class to pass info into threads
         {
-            packagedClass(int tid, ThreadSafeKVStore<K,V>* hashtable, ThreadSafeListenerQueue<int>* taskqueue);
-            int thread_id;
-            ThreadSafeKVStore<K,V>* ht;
-            ThreadSafeListenerQueue<int>* tq;
+            packagedClass(int tid, ThreadSafeKVStore<K,V>* hashtable, ThreadSafeListenerQueue<int>* taskqueue);  // constructor
+            int thread_id;                     // thread id number for identification
+            ThreadSafeKVStore<K,V>* ht;        // hashtable for storage
+            ThreadSafeListenerQueue<int>* tq;  // taskqueue for thread data
         };
     };
 }

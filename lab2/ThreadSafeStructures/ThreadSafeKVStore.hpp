@@ -20,10 +20,10 @@ namespace parallel_hash
         int remove(const K key);                     // removes key value pair associated with key parameter, returns 0 upon success
 
         typename std::unordered_map<K,V>::iterator begin();  // returns an iterator to the first element in the underlying unordered_map
-        typename std::unordered_map<K,V>::iterator end();  // returns an iterator to location just past the last element in the underlying unordered_map
+        typename std::unordered_map<K,V>::iterator end();    // returns an iterator to location just past the last element in the underlying unordered_map
 
     private:
-        pthread_rwlock_t lock;
+        pthread_rwlock_t lock;              // lock for reading/writing
         std::unordered_map<K,V> hashtable;  // templated hashtable
     };
 }

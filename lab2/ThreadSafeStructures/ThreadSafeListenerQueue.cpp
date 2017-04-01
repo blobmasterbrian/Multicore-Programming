@@ -7,10 +7,10 @@
 template<class T>
 parallel_queue::ThreadSafeListenerQueue<T>::ThreadSafeListenerQueue()
 {
-    sem_unlink("/semaphore");
-    if ((sem = sem_open("/semaphore", O_CREAT, 0644, 0)) == SEM_FAILED ) {
-        perror("sem_open");
-        exit(EXIT_FAILURE);
+    sem_unlink("/semaphore");  // clear any semaphore connection with name "/semaphore"
+    if ((sem = sem_open("/semaphore", O_CREAT, 0644, 0)) == SEM_FAILED ) {  // open/create a named semaphore
+        perror("sem_open");  // print opening error
+        exit(EXIT_FAILURE);  // exit case
     }
     pthread_rwlock_init(&lock,NULL);  // initialize queue lock
 }
@@ -19,13 +19,13 @@ parallel_queue::ThreadSafeListenerQueue<T>::ThreadSafeListenerQueue()
 template<class T>
 parallel_queue::ThreadSafeListenerQueue<T>::~ThreadSafeListenerQueue()
 {
-    if (sem_close(sem) == -1) {
-        perror("sem_close");
-        exit(EXIT_FAILURE);
+    if (sem_close(sem) == -1) {  // close named semaphore
+        perror("sem_close");     // print closing error
+        exit(EXIT_FAILURE);      // exit case
     }
-    if (sem_unlink("/semaphore") == -1) {
-        perror("sem_unlink");
-        exit(EXIT_FAILURE);
+    if (sem_unlink("/semaphore") == -1) {  // unlink name before going out of scope
+        perror("sem_unlink");              // print unlinking error
+        exit(EXIT_FAILURE);                // exit case
     }
     pthread_rwlock_destroy(&lock);  // destroys lock
 }
@@ -45,8 +45,8 @@ int parallel_queue::ThreadSafeListenerQueue<T>::push(const T element)
 template<class T>
 int parallel_queue::ThreadSafeListenerQueue<T>::pop(T& element)
 {
-    pthread_rwlock_rdlock(&lock);  // lock for reading
-    if (sem_trywait(sem) != 0) {   // try to acquire semaphore (if unacquirable queue is empty)
+    pthread_rwlock_rdlock(&lock);      // lock for reading
+    if (sem_trywait(sem) != 0) {       // try to acquire semaphore (if unacquirable queue is empty)
         pthread_rwlock_unlock(&lock);  // release lock
         return 1;  // return empty queue
     }
