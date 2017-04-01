@@ -62,6 +62,7 @@ void TPServer::ThreadPoolServer<K,V>::socket_listen(const int port)
 {
     int serv_fd, cli_fd;
     struct sockaddr_in serv_addr, cli_addr;
+    socklen_t cli_len;
 
     serv_fd = socket(AF_INET, SOCK_STREAM, 0);
     if (serv_fd < 0) {
@@ -74,9 +75,10 @@ void TPServer::ThreadPoolServer<K,V>::socket_listen(const int port)
     if (bind(serv_fd, (struct sockaddr*)&serv_addr, sizeof(serv_addr)) < 0) {
         panic("Binding Error");
     }
-    listen(serv_fd, 100);
+    listen(serv_fd, 10);
+    cli_len = sizeof(cli_addr);
     while (true) {
-        cli_fd = accept(serv_fd, (struct sockaddr*)&cli_addr, (socklen_t*)sizeof(cli_addr));
+        cli_fd = accept(serv_fd, (struct sockaddr*)&cli_addr, &cli_len);
         if (cli_fd < 0) {
             continue;
         }
@@ -89,6 +91,11 @@ template<class K, class V>
 void* TPServer::ThreadPoolServer<K,V>::create_worker_thread(void* arg)
 {
     packagedClass* package = (packagedClass*)arg;
+    uchar salt[BCRYPT_SALTLEN];
+    std::mt19937 salt_gen;
+    std::random_device salt_seed;
+    std::uniform_int_distribution<int> salt_dis(33,125);
+    salt_gen.seed(salt_seed());
     while (true) {
         int fd;
         package->tq->listen(fd);
@@ -110,11 +117,6 @@ void* TPServer::ThreadPoolServer<K,V>::create_worker_thread(void* arg)
         std::string key = request.getURI();
         std::string val = request.getBody();
 
-        uchar salt[BCRYPT_SALTLEN];
-        std::mt19937 salt_gen;
-        std::random_device salt_seed;
-        std::uniform_int_distribution<int> salt_dis(33,125);
-        salt_gen.seed(salt_seed());
         for (size_t i = 0; i < BCRYPT_SALTLEN; ++i) {
             salt[i] = (uchar)salt_dis(salt_gen);
         }

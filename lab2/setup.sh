@@ -1,8 +1,8 @@
-g++ -c bcrypt/blf.c -o bcrypt/blf.o
-g++ -c bcrypt/bcrypt.c -o bcrypt/bcrypt.o
+g++ -c -g bcrypt/blf.c -o bcrypt/blf.o
+g++ -c -g bcrypt/bcrypt.c -o bcrypt/bcrypt.o
 
-g++ -c httpreq/httpreq.cc -o httpreq/httpreq.o -std=c++11
-g++ -c httpreq/httpresp.cc -o httpreq/httpresp.o -std=c++11
+g++ -c -g httpreq/httpreq.cc -o httpreq/httpreq.o -std=c++11
+g++ -c -g httpreq/httpresp.cc -o httpreq/httpresp.o -std=c++11
 
 g++ -c -g ThreadSafeStructures/ThreadSafeKVStore.cpp -o ThreadSafeStructures/ThreadSafeKVStore.o -std=c++11
 g++ -c -g ThreadSafeStructures/ThreadSafeListenerQueue.cpp -o ThreadSafeStructures/ThreadSafeListenerQueue.o -std=c++11
