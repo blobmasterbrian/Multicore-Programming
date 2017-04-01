@@ -123,37 +123,37 @@ void* TPServer::ThreadPoolServer<K,V>::create_worker_thread(void* arg)
         ValueContainer<std::string> KVPair(val,salt);  // create value pair object
 
         ValueContainer<std::string> waste;
-        if (method == "GET") {                                   // request for lookup
-            if (package->ht->lookup(key, waste) == 0) {          // key present
-                HTTPResp response(200, "Key Found");             // 200 OK
-                std::string output = response.getResponse();     // generate output
-                write(fd, output.c_str(), output.size());        // send response to client
+        if (method == "GET") {                                         // request for lookup
+            if (package->ht->lookup(key, waste) == 0) {                // key present
+                HTTPResp response(200, "Key Found", true);             // 200 OK
+                std::string output = response.getResponse();           // generate output
+                write(fd, output.c_str(), output.size());              // send response to client
             } else {
-                HTTPResp response(404, "Key NOT Found");         // 404 NOT FOUND
-                std::string output = response.getResponse();     // generate response
-                write(fd, output.c_str(), output.size());        // send response to client
+                HTTPResp response(404, "Key NOT Found", true);         // 404 NOT FOUND
+                std::string output = response.getResponse();           // generate response
+                write(fd, output.c_str(), output.size());              // send response to client
             }
-        } else if (method == "POST") {                           // request for insertion
-            if (package->ht->insert(key, KVPair) == 0) {         // insertion successful
-                HTTPResp response(200, "Key/Value Inserted");    // 200 OK
-                std::string output = response.getResponse();     // generate output
-                write(fd, output.c_str(), output.size());        // send response to client
+        } else if (method == "POST") {                                 // request for insertion
+            if (package->ht->insert(key, KVPair) == 0) {               // insertion successful
+                HTTPResp response(200, "Key/Value Inserted", true);    // 200 OK
+                std::string output = response.getResponse();           // generate output
+                write(fd, output.c_str(), output.size());              // send response to client
             }
-        } else if (method == "DELETE") {                         // request for removal
-            if (package->ht->lookup(key, waste) == 0) {          // key present
-                package->ht->remove(key);                        // remove <key,value> pair
-                HTTPResp response(200, "Key/Value Destroyed");   // 200 OK
-                std::string output = response.getResponse();     // generate output
-                write(fd, output.c_str(), output.size());        // send response to client
+        } else if (method == "DELETE") {                               // request for removal
+            if (package->ht->lookup(key, waste) == 0) {                // key present
+                package->ht->remove(key);                              // remove <key,value> pair
+                HTTPResp response(200, "Key/Value Destroyed", true);   // 200 OK
+                std::string output = response.getResponse();           // generate output
+                write(fd, output.c_str(), output.size());              // send response to client
             } else {
-                HTTPResp response(404, "No Object to Destroy");  // 404 NOT FOUND
-                std::string output = response.getResponse();     // generate output
-                write(fd, output.c_str(), output.size());        // send response to client
+                HTTPResp response(404, "No Object to Destroy", true);  // 404 NOT FOUND
+                std::string output = response.getResponse();           // generate output
+                write(fd, output.c_str(), output.size());              // send response to client
             }
         } else {
-            HTTPResp response(400, "Unsupported Method");        // request not supported
-            std::string output = response.getResponse();         // generate output
-            write(fd, output.c_str(), output.size());            // send response to client
+            HTTPResp response(400, "Unsupported Method", true);        // request not supported
+            std::string output = response.getResponse();               // generate output
+            write(fd, output.c_str(), output.size());                  // send response to client
         }
         package->tq->push(fd);  // push back onto taskqueue for additional requests
     }
