@@ -118,7 +118,7 @@ void* TPServer::ThreadPoolServer<K,V>::create_worker_thread(void* arg)
         std::string val = request.getBody();       // set value
 
         for (size_t i = 0; i < BCRYPT_SALTLEN; ++i) {
-            salt[i] = (uchar)salt_dis(salt_gen);   // generate random characters for salt
+            salt[i] = (uchar)salt_dis(salt_gen);       // generate random characters for salt
         }
         ValueContainer<std::string> KVPair(val,salt);  // create value pair object
 

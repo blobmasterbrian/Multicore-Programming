@@ -106,15 +106,15 @@ std::string HTTPReq::readLine(void) {
 		if (rval < 0) {
 			// errno is set
 			return "";
+		} else if (rval == 0) {
+			errno = EIO;
+			return "";
 		} else if (rval == 1) {
 			line.append(1, byte);
 			if (state == 1) {
 				state = (byte == '\n') ? 2 : 0;
 			} else if (state == 0 && byte == '\r') {
 				state = 1;
-		} else if (rval == 0) {
-			errno = EIO;
-			return "";
 			}
 		}
 	}
