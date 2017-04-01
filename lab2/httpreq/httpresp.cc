@@ -1,6 +1,6 @@
 // httpresp.cc - HTTP Request Generator
 // (c) 2017 Christopher Mitchell, Ph.D.
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
@@ -16,15 +16,6 @@
 
 #include "httpresp.hpp"
 
-const std::unordered_map<unsigned int, std::string> HTTPResp::status_phrase = {
-	{200, "OK"},
-	{400, "Bad Request"},
-	{404, "Not Found"},
-	{418, "I'm a teapot"},
-	{500, "Internal Server Error"},
-	{501, "Not Implemented"}
-};
-
 HTTPResp::HTTPResp(const unsigned int code, const std::string& body, const bool keep_alive)
 	: code_(code)
 	, keep_alive_(keep_alive)
@@ -34,6 +25,15 @@ HTTPResp::HTTPResp(const unsigned int code, const std::string& body, const bool 
 }
 
 void HTTPResp::buildResponse(const std::string& body) {
+	status_phrase = {
+		{200, "OK"},
+		{400, "Bad Request"},
+		{404, "Not Found"},
+		{418, "I'm a teapot"},
+		{500, "Internal Server Error"},
+		{501, "Not Implemented"}
+	};
+
 	auto status = status_phrase.find(code_);
 	if (status == status_phrase.end()) {
 		return;

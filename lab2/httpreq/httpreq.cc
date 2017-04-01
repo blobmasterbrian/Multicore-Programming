@@ -73,7 +73,7 @@ int HTTPReq::parse(void) {
 		if (0 == strncasecmp(key.c_str(), "content-length", key.length())) {
 			content_length = strtol(val.c_str(), nullptr, 0);
 		} else {
-			std::cerr << "Ignoring header field '" << key << "'" << std::endl;
+			// std::cerr << "Ignoring header field '" << key << "'" << std::endl;
 		}
 
 	} while (true);

@@ -1,6 +1,6 @@
 // httpresp.hpp - HTTP Request Generator
 // (c) 2017 Christopher Mitchell, Ph.D.
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
@@ -28,7 +28,7 @@ class HTTPResp {
 	HTTPResp(const unsigned int code, const std::string& body = "", const bool keep_alive = true);
 	const std::string getResponse();
 	const bool isMalformed();
-  
+
   private:
 	unsigned int code_;
 	bool keep_alive_;
@@ -36,6 +36,5 @@ class HTTPResp {
 	std::string response_;
 
 	void buildResponse(const std::string& body);
-	static const std::unordered_map<unsigned int, std::string> status_phrase;
+	std::unordered_map<unsigned int, std::string> status_phrase;
 };
-

@@ -1,3 +1,6 @@
+rm */*.o
+rm *.o
+
 g++ -c -g bcrypt/blf.c -o bcrypt/blf.o
 g++ -c -g bcrypt/bcrypt.c -o bcrypt/bcrypt.o
 
