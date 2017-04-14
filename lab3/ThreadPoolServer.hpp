@@ -49,6 +49,7 @@ namespace TPServer
         ThreadSafeKVStore<K,V>* hashtable;        // thread safe hashtable to process thread requests
         ThreadSafeListenerQueue<int>* taskqueue;  // thread safe queue for pushing data to threads
         std::vector<pthread_t> threadpool;        // threadpool to pull threads
+        std::unordered_map<int,std::chrono::steady_clock::time_point> timestamps;
 
         void increment_stat(size_t index);             // increments overall count for lookup/insert/delete
         void socket_listen(const int port);            // listens on port for incoming connections to pass to threads

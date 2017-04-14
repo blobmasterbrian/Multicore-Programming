@@ -96,12 +96,24 @@ void TPServer::ThreadPoolServer<K,V>::socket_listen(const int port)
     listen(serv_fd, 10);         //  listen on server file descriptor for requests, queue up to 10
     cli_len = sizeof(cli_addr);  //  set client length
 
+    std::string output;
+    std::chrono::system_clock::time_point connection_time;
+    std::chrono::steady_clock::time_point timepoint;
     while (true) {
         cli_fd = accept(serv_fd, (struct sockaddr*)&cli_addr, &cli_len);  // accept connection requests
         if (cli_fd < 0) {
             continue;  // ignore error cases (allow retransmission)
         }
+        connection_time = std::chrono::system_clock::now();
+        timepoint = std::chrono::steady_clock::now();
+
         this->taskqueue->push(cli_fd);  // push valid connection to threadpool for processing
+        timestamps[cli_fd] = timepoint;
+
+        std::time_t ct = std::chrono::system_clock::to_time_t(connection_time);  // convert to time_t type
+        std::tm* pt = std::localtime(&ct);  // convert to tm type
+        output = "[Main] Connection " + std::to_string(cli_fd) + " created at: " + std::to_string(pt->tm_hour) + ':' + std::to_string(pt->tm_min) + ':' + std::to_string(pt->tm_sec) + '\n';
+        std::cout << output;
     }
 }
 
@@ -124,6 +136,8 @@ void* TPServer::ThreadPoolServer<K,V>::create_worker_thread(void* arg)
         char buffer[32];  //  buffer to check if there is incoming data
         if (recv(fd, buffer, sizeof(buffer), MSG_PEEK | MSG_DONTWAIT) == 0) {  // no incoming data means client closed connection
             close(fd);    // close connection from server
+            std::string output = "\n[Thread " + std::to_string(package->thread_id) + "] Statistics after closing connection " + std::to_string(fd) + "\n[Thread " + std::to_string(package->thread_id) + "] Connection Duration: " + std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - package->creator->timestamps[fd]).count()) + " milliseconds" + "\n[Thread " + std::to_string(package->thread_id) + "] Total Lookups: " + std::to_string(package->creator->stats[0]) + "\n[Thread " + std::to_string(package->thread_id) + "] Total Inserts: " + std::to_string(package->creator->stats[1]) + "\n[Thread " + std::to_string(package->thread_id) + "] Total Deletions: " + std::to_string(package->creator->stats[2]) + "\n\n";
+            std::cout << output;
             continue;     // continue to next connection
         }
         HTTPReq request(fd);         // create HTTPReq object
@@ -144,8 +158,8 @@ void* TPServer::ThreadPoolServer<K,V>::create_worker_thread(void* arg)
         ValueContainer<std::string> waste;
         if (method == "GET") {                                         // request for lookup
             package->creator->increment_stat(0);
-            std::string output = "[Thread " + std::to_string(package->thread_id) + "] Lookup Requested\n";
-            std::cout << output;
+            // std::string output = "[Thread " + std::to_string(package->thread_id) + "] Lookup Requested: <" + key + ">\n";
+            // std::cout << output;
 
             if (package->ht->lookup(key, waste) == 0) {                // key present
                 HTTPResp response(200, "Key Found", true);             // 200 OK
@@ -158,8 +172,8 @@ void* TPServer::ThreadPoolServer<K,V>::create_worker_thread(void* arg)
             }
         } else if (method == "POST") {                                 // request for insertion
             package->creator->increment_stat(1);
-            std::string output = "[Thread " + std::to_string(package->thread_id) + "] Insertion Requested\n";
-            std::cout << output;
+            // std::string output = "[Thread " + std::to_string(package->thread_id) + "] Insertion Requested: <" + key + ">\n";
+            // std::cout << output;
 
             if (package->ht->insert(key, KVPair) == 0) {               // insertion successful
                 HTTPResp response(200, "Key/Value Inserted", true);    // 200 OK
@@ -168,8 +182,8 @@ void* TPServer::ThreadPoolServer<K,V>::create_worker_thread(void* arg)
             }
         } else if (method == "DELETE") {                               // request for removal
             package->creator->increment_stat(2);
-            std::string output = "[Thread " + std::to_string(package->thread_id) + "] Delete Requested\n";
-            std::cout << output;
+            // std::string output = "[Thread " + std::to_string(package->thread_id) + "] Delete Requested: <" + key + ">\n";
+            // std::cout << output;
 
             if (package->ht->lookup(key, waste) == 0) {                // key present
                 package->ht->remove(key);                              // remove <key,value> pair
