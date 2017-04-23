@@ -1,0 +1,12 @@
+Grade: 95
+Feedback: 
+(i) Good Job with Testing and Documentation of results - <,=,> thread and connections. (ii) Good Documentation and Comments. (iii) Report is good with tabulated data - Graphs would have been more better. (iv) More reasoning on when the max value occurs during testing can be explained well. (v) Talks about Network Latency could have also been better
+SplitUp:
+Experiments for understanding/improving performance: 40
+Correct Implementation - Counting Requests: 10
+Correct Implementation - Aggregating Min/Max/Med Values: 10
+Implementation - Consideration of First Request, etc (Understanding what they're accounting): 5
+Readable statistics: 10
+Printing Statistics - Console/File: 10
+Code structure and complexity: 10
+Doesn't compile and/or doesn't run successfully: 0
