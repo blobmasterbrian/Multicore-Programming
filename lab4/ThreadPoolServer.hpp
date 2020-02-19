@@ -1,12 +1,14 @@
 #ifndef TPS_HPP
 #define TPS_HPP
 
+extern "C" {
+#include "bcrypt/blf.h"
+#include "bcrypt/bcrypt.h"
+}
 #include "ThreadSafeStructures/ThreadSafeKVStore.hpp"
 #include "ThreadSafeStructures/ThreadSafeListenerQueue.hpp"
 #include "httpreq/httpreq.hpp"
 #include "httpreq/httpresp.hpp"
-#include "bcrypt/blf.h"
-#include "bcrypt/bcrypt.h"
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>

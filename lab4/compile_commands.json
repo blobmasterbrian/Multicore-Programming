@@ -1,0 +1,47 @@
+[
+{
+  "directory": "/Users/jayquinn/Projects/Multicore-Programming/lab4",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++   -I/Users/jayquinn/Projects/Multicore-Programming/lab4 -I/Users/jayquinn/Projects/Multicore-Programming/lab4/ThreadSafeStructures -I/Users/jayquinn/Projects/Multicore-Programming/lab4/bcrypt -I/Users/jayquinn/Projects/Multicore-Programming/lab4/httpreq   -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk   -std=gnu++1z -o CMakeFiles/lab4.dir/ThreadPoolServer.cpp.o -c /Users/jayquinn/Projects/Multicore-Programming/lab4/ThreadPoolServer.cpp",
+  "file": "/Users/jayquinn/Projects/Multicore-Programming/lab4/ThreadPoolServer.cpp"
+},
+{
+  "directory": "/Users/jayquinn/Projects/Multicore-Programming/lab4",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++   -I/Users/jayquinn/Projects/Multicore-Programming/lab4 -I/Users/jayquinn/Projects/Multicore-Programming/lab4/ThreadSafeStructures -I/Users/jayquinn/Projects/Multicore-Programming/lab4/bcrypt -I/Users/jayquinn/Projects/Multicore-Programming/lab4/httpreq   -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk   -std=gnu++1z -o CMakeFiles/lab4.dir/lab4.cpp.o -c /Users/jayquinn/Projects/Multicore-Programming/lab4/lab4.cpp",
+  "file": "/Users/jayquinn/Projects/Multicore-Programming/lab4/lab4.cpp"
+},
+{
+  "directory": "/Users/jayquinn/Projects/Multicore-Programming/lab4/ThreadSafeStructures",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++     -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk   -std=gnu++1z -o CMakeFiles/ThreadSafeStructures.dir/ThreadSafeKVStore.cpp.o -c /Users/jayquinn/Projects/Multicore-Programming/lab4/ThreadSafeStructures/ThreadSafeKVStore.cpp",
+  "file": "/Users/jayquinn/Projects/Multicore-Programming/lab4/ThreadSafeStructures/ThreadSafeKVStore.cpp"
+},
+{
+  "directory": "/Users/jayquinn/Projects/Multicore-Programming/lab4/ThreadSafeStructures",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++     -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk   -std=gnu++1z -o CMakeFiles/ThreadSafeStructures.dir/ThreadSafeListenerQueue.cpp.o -c /Users/jayquinn/Projects/Multicore-Programming/lab4/ThreadSafeStructures/ThreadSafeListenerQueue.cpp",
+  "file": "/Users/jayquinn/Projects/Multicore-Programming/lab4/ThreadSafeStructures/ThreadSafeListenerQueue.cpp"
+},
+{
+  "directory": "/Users/jayquinn/Projects/Multicore-Programming/lab4/bcrypt",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/cc    -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk   -o CMakeFiles/bcrypt.dir/bcrypt.c.o   -c /Users/jayquinn/Projects/Multicore-Programming/lab4/bcrypt/bcrypt.c",
+  "file": "/Users/jayquinn/Projects/Multicore-Programming/lab4/bcrypt/bcrypt.c"
+},
+{
+  "directory": "/Users/jayquinn/Projects/Multicore-Programming/lab4/bcrypt",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/cc    -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk   -o CMakeFiles/bcrypt.dir/blf.c.o   -c /Users/jayquinn/Projects/Multicore-Programming/lab4/bcrypt/blf.c",
+  "file": "/Users/jayquinn/Projects/Multicore-Programming/lab4/bcrypt/blf.c"
+},
+{
+  "directory": "/Users/jayquinn/Projects/Multicore-Programming/lab4/httpreq",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++     -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk   -std=gnu++1z -o CMakeFiles/httpreq.dir/httpreq.cc.o -c /Users/jayquinn/Projects/Multicore-Programming/lab4/httpreq/httpreq.cc",
+  "file": "/Users/jayquinn/Projects/Multicore-Programming/lab4/httpreq/httpreq.cc"
+},
+{
+  "directory": "/Users/jayquinn/Projects/Multicore-Programming/lab4/httpreq",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++     -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk   -std=gnu++1z -o CMakeFiles/httpreq.dir/httpresp.cc.o -c /Users/jayquinn/Projects/Multicore-Programming/lab4/httpreq/httpresp.cc",
+  "file": "/Users/jayquinn/Projects/Multicore-Programming/lab4/httpreq/httpresp.cc"
+},
+{
+  "directory": "/Users/jayquinn/Projects/Multicore-Programming/lab4/httpreq",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++     -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk   -std=gnu++1z -o CMakeFiles/httpreq.dir/test-httpreq.cc.o -c /Users/jayquinn/Projects/Multicore-Programming/lab4/httpreq/test-httpreq.cc",
+  "file": "/Users/jayquinn/Projects/Multicore-Programming/lab4/httpreq/test-httpreq.cc"
+}
+]

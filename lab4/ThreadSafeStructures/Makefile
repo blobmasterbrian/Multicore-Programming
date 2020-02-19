@@ -80,14 +80,14 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(CMAKE_COMMAND) -E cmake_progress_start /Users/jayquinn/Projects/Multicore-Programming/lab4/CMakeFiles /Users/jayquinn/Projects/Multicore-Programming/lab4/httpreq/CMakeFiles/progress.marks
-	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f CMakeFiles/Makefile2 httpreq/all
+	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(CMAKE_COMMAND) -E cmake_progress_start /Users/jayquinn/Projects/Multicore-Programming/lab4/CMakeFiles /Users/jayquinn/Projects/Multicore-Programming/lab4/ThreadSafeStructures/CMakeFiles/progress.marks
+	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f CMakeFiles/Makefile2 ThreadSafeStructures/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/jayquinn/Projects/Multicore-Programming/lab4/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f CMakeFiles/Makefile2 httpreq/clean
+	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f CMakeFiles/Makefile2 ThreadSafeStructures/clean
 .PHONY : clean
 
 # The main clean target
@@ -97,12 +97,12 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f CMakeFiles/Makefile2 httpreq/preinstall
+	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f CMakeFiles/Makefile2 ThreadSafeStructures/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f CMakeFiles/Makefile2 httpreq/preinstall
+	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f CMakeFiles/Makefile2 ThreadSafeStructures/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
@@ -111,100 +111,73 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-httpreq/CMakeFiles/httpreq.dir/rule:
-	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f CMakeFiles/Makefile2 httpreq/CMakeFiles/httpreq.dir/rule
-.PHONY : httpreq/CMakeFiles/httpreq.dir/rule
+ThreadSafeStructures/CMakeFiles/ThreadSafeStructures.dir/rule:
+	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f CMakeFiles/Makefile2 ThreadSafeStructures/CMakeFiles/ThreadSafeStructures.dir/rule
+.PHONY : ThreadSafeStructures/CMakeFiles/ThreadSafeStructures.dir/rule
 
 # Convenience name for target.
-httpreq: httpreq/CMakeFiles/httpreq.dir/rule
+ThreadSafeStructures: ThreadSafeStructures/CMakeFiles/ThreadSafeStructures.dir/rule
 
-.PHONY : httpreq
+.PHONY : ThreadSafeStructures
 
 # fast build rule for target.
-httpreq/fast:
-	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f httpreq/CMakeFiles/httpreq.dir/build.make httpreq/CMakeFiles/httpreq.dir/build
-.PHONY : httpreq/fast
+ThreadSafeStructures/fast:
+	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f ThreadSafeStructures/CMakeFiles/ThreadSafeStructures.dir/build.make ThreadSafeStructures/CMakeFiles/ThreadSafeStructures.dir/build
+.PHONY : ThreadSafeStructures/fast
 
-httpreq.o: httpreq.cc.o
+ThreadSafeKVStore.o: ThreadSafeKVStore.cpp.o
 
-.PHONY : httpreq.o
-
-# target to build an object file
-httpreq.cc.o:
-	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f httpreq/CMakeFiles/httpreq.dir/build.make httpreq/CMakeFiles/httpreq.dir/httpreq.cc.o
-.PHONY : httpreq.cc.o
-
-httpreq.i: httpreq.cc.i
-
-.PHONY : httpreq.i
-
-# target to preprocess a source file
-httpreq.cc.i:
-	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f httpreq/CMakeFiles/httpreq.dir/build.make httpreq/CMakeFiles/httpreq.dir/httpreq.cc.i
-.PHONY : httpreq.cc.i
-
-httpreq.s: httpreq.cc.s
-
-.PHONY : httpreq.s
-
-# target to generate assembly for a file
-httpreq.cc.s:
-	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f httpreq/CMakeFiles/httpreq.dir/build.make httpreq/CMakeFiles/httpreq.dir/httpreq.cc.s
-.PHONY : httpreq.cc.s
-
-httpresp.o: httpresp.cc.o
-
-.PHONY : httpresp.o
+.PHONY : ThreadSafeKVStore.o
 
 # target to build an object file
-httpresp.cc.o:
-	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f httpreq/CMakeFiles/httpreq.dir/build.make httpreq/CMakeFiles/httpreq.dir/httpresp.cc.o
-.PHONY : httpresp.cc.o
+ThreadSafeKVStore.cpp.o:
+	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f ThreadSafeStructures/CMakeFiles/ThreadSafeStructures.dir/build.make ThreadSafeStructures/CMakeFiles/ThreadSafeStructures.dir/ThreadSafeKVStore.cpp.o
+.PHONY : ThreadSafeKVStore.cpp.o
 
-httpresp.i: httpresp.cc.i
+ThreadSafeKVStore.i: ThreadSafeKVStore.cpp.i
 
-.PHONY : httpresp.i
+.PHONY : ThreadSafeKVStore.i
 
 # target to preprocess a source file
-httpresp.cc.i:
-	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f httpreq/CMakeFiles/httpreq.dir/build.make httpreq/CMakeFiles/httpreq.dir/httpresp.cc.i
-.PHONY : httpresp.cc.i
+ThreadSafeKVStore.cpp.i:
+	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f ThreadSafeStructures/CMakeFiles/ThreadSafeStructures.dir/build.make ThreadSafeStructures/CMakeFiles/ThreadSafeStructures.dir/ThreadSafeKVStore.cpp.i
+.PHONY : ThreadSafeKVStore.cpp.i
 
-httpresp.s: httpresp.cc.s
+ThreadSafeKVStore.s: ThreadSafeKVStore.cpp.s
 
-.PHONY : httpresp.s
+.PHONY : ThreadSafeKVStore.s
 
 # target to generate assembly for a file
-httpresp.cc.s:
-	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f httpreq/CMakeFiles/httpreq.dir/build.make httpreq/CMakeFiles/httpreq.dir/httpresp.cc.s
-.PHONY : httpresp.cc.s
+ThreadSafeKVStore.cpp.s:
+	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f ThreadSafeStructures/CMakeFiles/ThreadSafeStructures.dir/build.make ThreadSafeStructures/CMakeFiles/ThreadSafeStructures.dir/ThreadSafeKVStore.cpp.s
+.PHONY : ThreadSafeKVStore.cpp.s
 
-test-httpreq.o: test-httpreq.cc.o
+ThreadSafeListenerQueue.o: ThreadSafeListenerQueue.cpp.o
 
-.PHONY : test-httpreq.o
+.PHONY : ThreadSafeListenerQueue.o
 
 # target to build an object file
-test-httpreq.cc.o:
-	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f httpreq/CMakeFiles/httpreq.dir/build.make httpreq/CMakeFiles/httpreq.dir/test-httpreq.cc.o
-.PHONY : test-httpreq.cc.o
+ThreadSafeListenerQueue.cpp.o:
+	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f ThreadSafeStructures/CMakeFiles/ThreadSafeStructures.dir/build.make ThreadSafeStructures/CMakeFiles/ThreadSafeStructures.dir/ThreadSafeListenerQueue.cpp.o
+.PHONY : ThreadSafeListenerQueue.cpp.o
 
-test-httpreq.i: test-httpreq.cc.i
+ThreadSafeListenerQueue.i: ThreadSafeListenerQueue.cpp.i
 
-.PHONY : test-httpreq.i
+.PHONY : ThreadSafeListenerQueue.i
 
 # target to preprocess a source file
-test-httpreq.cc.i:
-	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f httpreq/CMakeFiles/httpreq.dir/build.make httpreq/CMakeFiles/httpreq.dir/test-httpreq.cc.i
-.PHONY : test-httpreq.cc.i
+ThreadSafeListenerQueue.cpp.i:
+	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f ThreadSafeStructures/CMakeFiles/ThreadSafeStructures.dir/build.make ThreadSafeStructures/CMakeFiles/ThreadSafeStructures.dir/ThreadSafeListenerQueue.cpp.i
+.PHONY : ThreadSafeListenerQueue.cpp.i
 
-test-httpreq.s: test-httpreq.cc.s
+ThreadSafeListenerQueue.s: ThreadSafeListenerQueue.cpp.s
 
-.PHONY : test-httpreq.s
+.PHONY : ThreadSafeListenerQueue.s
 
 # target to generate assembly for a file
-test-httpreq.cc.s:
-	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f httpreq/CMakeFiles/httpreq.dir/build.make httpreq/CMakeFiles/httpreq.dir/test-httpreq.cc.s
-.PHONY : test-httpreq.cc.s
+ThreadSafeListenerQueue.cpp.s:
+	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f ThreadSafeStructures/CMakeFiles/ThreadSafeStructures.dir/build.make ThreadSafeStructures/CMakeFiles/ThreadSafeStructures.dir/ThreadSafeListenerQueue.cpp.s
+.PHONY : ThreadSafeListenerQueue.cpp.s
 
 # Help Target
 help:
@@ -214,16 +187,13 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... httpreq"
-	@echo "... httpreq.o"
-	@echo "... httpreq.i"
-	@echo "... httpreq.s"
-	@echo "... httpresp.o"
-	@echo "... httpresp.i"
-	@echo "... httpresp.s"
-	@echo "... test-httpreq.o"
-	@echo "... test-httpreq.i"
-	@echo "... test-httpreq.s"
+	@echo "... ThreadSafeStructures"
+	@echo "... ThreadSafeKVStore.o"
+	@echo "... ThreadSafeKVStore.i"
+	@echo "... ThreadSafeKVStore.s"
+	@echo "... ThreadSafeListenerQueue.o"
+	@echo "... ThreadSafeListenerQueue.i"
+	@echo "... ThreadSafeListenerQueue.s"
 .PHONY : help
 
 

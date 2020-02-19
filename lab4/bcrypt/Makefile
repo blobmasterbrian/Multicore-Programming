@@ -80,14 +80,14 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(CMAKE_COMMAND) -E cmake_progress_start /Users/jayquinn/Projects/Multicore-Programming/lab4/CMakeFiles /Users/jayquinn/Projects/Multicore-Programming/lab4/httpreq/CMakeFiles/progress.marks
-	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f CMakeFiles/Makefile2 httpreq/all
+	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(CMAKE_COMMAND) -E cmake_progress_start /Users/jayquinn/Projects/Multicore-Programming/lab4/CMakeFiles /Users/jayquinn/Projects/Multicore-Programming/lab4/bcrypt/CMakeFiles/progress.marks
+	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f CMakeFiles/Makefile2 bcrypt/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/jayquinn/Projects/Multicore-Programming/lab4/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f CMakeFiles/Makefile2 httpreq/clean
+	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f CMakeFiles/Makefile2 bcrypt/clean
 .PHONY : clean
 
 # The main clean target
@@ -97,12 +97,12 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f CMakeFiles/Makefile2 httpreq/preinstall
+	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f CMakeFiles/Makefile2 bcrypt/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f CMakeFiles/Makefile2 httpreq/preinstall
+	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f CMakeFiles/Makefile2 bcrypt/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
@@ -111,100 +111,73 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-httpreq/CMakeFiles/httpreq.dir/rule:
-	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f CMakeFiles/Makefile2 httpreq/CMakeFiles/httpreq.dir/rule
-.PHONY : httpreq/CMakeFiles/httpreq.dir/rule
+bcrypt/CMakeFiles/bcrypt.dir/rule:
+	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f CMakeFiles/Makefile2 bcrypt/CMakeFiles/bcrypt.dir/rule
+.PHONY : bcrypt/CMakeFiles/bcrypt.dir/rule
 
 # Convenience name for target.
-httpreq: httpreq/CMakeFiles/httpreq.dir/rule
+bcrypt: bcrypt/CMakeFiles/bcrypt.dir/rule
 
-.PHONY : httpreq
+.PHONY : bcrypt
 
 # fast build rule for target.
-httpreq/fast:
-	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f httpreq/CMakeFiles/httpreq.dir/build.make httpreq/CMakeFiles/httpreq.dir/build
-.PHONY : httpreq/fast
+bcrypt/fast:
+	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f bcrypt/CMakeFiles/bcrypt.dir/build.make bcrypt/CMakeFiles/bcrypt.dir/build
+.PHONY : bcrypt/fast
 
-httpreq.o: httpreq.cc.o
+bcrypt.o: bcrypt.c.o
 
-.PHONY : httpreq.o
-
-# target to build an object file
-httpreq.cc.o:
-	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f httpreq/CMakeFiles/httpreq.dir/build.make httpreq/CMakeFiles/httpreq.dir/httpreq.cc.o
-.PHONY : httpreq.cc.o
-
-httpreq.i: httpreq.cc.i
-
-.PHONY : httpreq.i
-
-# target to preprocess a source file
-httpreq.cc.i:
-	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f httpreq/CMakeFiles/httpreq.dir/build.make httpreq/CMakeFiles/httpreq.dir/httpreq.cc.i
-.PHONY : httpreq.cc.i
-
-httpreq.s: httpreq.cc.s
-
-.PHONY : httpreq.s
-
-# target to generate assembly for a file
-httpreq.cc.s:
-	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f httpreq/CMakeFiles/httpreq.dir/build.make httpreq/CMakeFiles/httpreq.dir/httpreq.cc.s
-.PHONY : httpreq.cc.s
-
-httpresp.o: httpresp.cc.o
-
-.PHONY : httpresp.o
+.PHONY : bcrypt.o
 
 # target to build an object file
-httpresp.cc.o:
-	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f httpreq/CMakeFiles/httpreq.dir/build.make httpreq/CMakeFiles/httpreq.dir/httpresp.cc.o
-.PHONY : httpresp.cc.o
+bcrypt.c.o:
+	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f bcrypt/CMakeFiles/bcrypt.dir/build.make bcrypt/CMakeFiles/bcrypt.dir/bcrypt.c.o
+.PHONY : bcrypt.c.o
 
-httpresp.i: httpresp.cc.i
+bcrypt.i: bcrypt.c.i
 
-.PHONY : httpresp.i
+.PHONY : bcrypt.i
 
 # target to preprocess a source file
-httpresp.cc.i:
-	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f httpreq/CMakeFiles/httpreq.dir/build.make httpreq/CMakeFiles/httpreq.dir/httpresp.cc.i
-.PHONY : httpresp.cc.i
+bcrypt.c.i:
+	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f bcrypt/CMakeFiles/bcrypt.dir/build.make bcrypt/CMakeFiles/bcrypt.dir/bcrypt.c.i
+.PHONY : bcrypt.c.i
 
-httpresp.s: httpresp.cc.s
+bcrypt.s: bcrypt.c.s
 
-.PHONY : httpresp.s
+.PHONY : bcrypt.s
 
 # target to generate assembly for a file
-httpresp.cc.s:
-	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f httpreq/CMakeFiles/httpreq.dir/build.make httpreq/CMakeFiles/httpreq.dir/httpresp.cc.s
-.PHONY : httpresp.cc.s
+bcrypt.c.s:
+	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f bcrypt/CMakeFiles/bcrypt.dir/build.make bcrypt/CMakeFiles/bcrypt.dir/bcrypt.c.s
+.PHONY : bcrypt.c.s
 
-test-httpreq.o: test-httpreq.cc.o
+blf.o: blf.c.o
 
-.PHONY : test-httpreq.o
+.PHONY : blf.o
 
 # target to build an object file
-test-httpreq.cc.o:
-	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f httpreq/CMakeFiles/httpreq.dir/build.make httpreq/CMakeFiles/httpreq.dir/test-httpreq.cc.o
-.PHONY : test-httpreq.cc.o
+blf.c.o:
+	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f bcrypt/CMakeFiles/bcrypt.dir/build.make bcrypt/CMakeFiles/bcrypt.dir/blf.c.o
+.PHONY : blf.c.o
 
-test-httpreq.i: test-httpreq.cc.i
+blf.i: blf.c.i
 
-.PHONY : test-httpreq.i
+.PHONY : blf.i
 
 # target to preprocess a source file
-test-httpreq.cc.i:
-	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f httpreq/CMakeFiles/httpreq.dir/build.make httpreq/CMakeFiles/httpreq.dir/test-httpreq.cc.i
-.PHONY : test-httpreq.cc.i
+blf.c.i:
+	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f bcrypt/CMakeFiles/bcrypt.dir/build.make bcrypt/CMakeFiles/bcrypt.dir/blf.c.i
+.PHONY : blf.c.i
 
-test-httpreq.s: test-httpreq.cc.s
+blf.s: blf.c.s
 
-.PHONY : test-httpreq.s
+.PHONY : blf.s
 
 # target to generate assembly for a file
-test-httpreq.cc.s:
-	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f httpreq/CMakeFiles/httpreq.dir/build.make httpreq/CMakeFiles/httpreq.dir/test-httpreq.cc.s
-.PHONY : test-httpreq.cc.s
+blf.c.s:
+	cd /Users/jayquinn/Projects/Multicore-Programming/lab4 && $(MAKE) -f bcrypt/CMakeFiles/bcrypt.dir/build.make bcrypt/CMakeFiles/bcrypt.dir/blf.c.s
+.PHONY : blf.c.s
 
 # Help Target
 help:
@@ -214,16 +187,13 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... httpreq"
-	@echo "... httpreq.o"
-	@echo "... httpreq.i"
-	@echo "... httpreq.s"
-	@echo "... httpresp.o"
-	@echo "... httpresp.i"
-	@echo "... httpresp.s"
-	@echo "... test-httpreq.o"
-	@echo "... test-httpreq.i"
-	@echo "... test-httpreq.s"
+	@echo "... bcrypt"
+	@echo "... bcrypt.o"
+	@echo "... bcrypt.i"
+	@echo "... bcrypt.s"
+	@echo "... blf.o"
+	@echo "... blf.i"
+	@echo "... blf.s"
 .PHONY : help
 
 
